@@ -248,6 +248,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      check_answer: { Args: { _answer_id: string }; Returns: boolean }
       get_quiz_leaderboard: {
         Args: { _limit?: number; _quiz_id: string }
         Returns: {
@@ -258,12 +259,17 @@ export type Database = {
           user_id: string
         }[]
       }
+      get_quiz_questions: { Args: { _quiz_id: string }; Returns: Json }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
           _user_id: string
         }
         Returns: boolean
+      }
+      submit_quiz_attempt: {
+        Args: { _answers: Json; _quiz_id: string }
+        Returns: Json
       }
     }
     Enums: {
