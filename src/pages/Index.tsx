@@ -52,7 +52,7 @@ export default function Index() {
   const categories = [...new Set(quizzes.map((q) => q.category).filter(Boolean))];
 
   return (
-    <div className="container py-8">
+    <div className="container py-6 px-4">
       <div className="mb-8 animate-fade-in">
         <h1 className="font-display text-3xl font-bold md:text-4xl">Квизы</h1>
         <p className="mt-2 text-muted-foreground">Выберите квиз и проверьте свои знания</p>

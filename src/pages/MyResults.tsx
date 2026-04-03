@@ -89,12 +89,12 @@ export default function MyResults() {
               <CardContent>
                 <div className="space-y-2">
                   {g.attempts.slice(0, 5).map((a) => (
-                    <div key={a.id} className="flex items-center justify-between rounded-lg border p-3 text-sm">
-                      <div className="flex items-center gap-2">
-                        <Clock className="h-4 w-4 text-muted-foreground" />
-                        <span>{new Date(a.completed_at).toLocaleDateString("ru-RU", { day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" })}</span>
+                    <div key={a.id} className="flex flex-wrap items-center justify-between gap-2 rounded-lg border p-3 text-sm">
+                      <div className="flex items-center gap-2 min-w-0">
+                        <Clock className="h-4 w-4 shrink-0 text-muted-foreground" />
+                        <span className="truncate">{new Date(a.completed_at).toLocaleDateString("ru-RU", { day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" })}</span>
                       </div>
-                      <span className="font-medium">{a.score}/{a.total_questions} ({Math.round((a.score / a.total_questions) * 100)}%)</span>
+                      <span className="font-medium shrink-0">{a.score}/{a.total_questions} ({Math.round((a.score / a.total_questions) * 100)}%)</span>
                     </div>
                   ))}
                   {g.attempts.length > 5 && (
