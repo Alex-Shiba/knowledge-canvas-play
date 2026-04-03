@@ -51,7 +51,7 @@ export default function QuizPlay() {
         supabase.rpc("get_quiz_questions", { _quiz_id: id }),
       ]);
       if (quiz) setQuizTitle(quiz.title);
-      if (questionsData) setQuestions(questionsData as Question[]);
+      if (questionsData) setQuestions(questionsData as unknown as Question[]);
       setLoading(false);
     };
     load();
