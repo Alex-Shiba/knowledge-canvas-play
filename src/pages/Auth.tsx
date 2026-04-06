@@ -49,7 +49,12 @@ export default function Auth() {
     const { error } = await signIn(email, password);
     setLoading(false);
     if (error) {
-      toast({ title: "Ошибка входа", description: error.message, variant: "destructive" });
+      if (error.message === "Invalid login credentials") {
+        setMode("register");
+        toast({ title: "Аккаунт не найден", description: "Заполните имя и зарегистрируйтесь" });
+      } else {
+        toast({ title: "Ошибка входа", description: error.message, variant: "destructive" });
+      }
     } else {
       navigate("/");
     }
