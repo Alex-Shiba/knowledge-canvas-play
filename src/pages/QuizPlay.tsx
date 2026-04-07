@@ -233,9 +233,20 @@ export default function QuizPlay() {
         ))}
       </div>
 
-      {/* Question label */}
-      <div className="inline-block border border-accent/40 text-accent text-[10px] uppercase tracking-wider px-3 py-1.5 rounded mb-5">
-        Вопрос {currentIdx + 1} из {questions.length}
+      {/* Question label + Timer */}
+      <div className="flex items-center justify-between mb-5">
+        <div className="inline-block border border-accent/40 text-accent text-[10px] uppercase tracking-wider px-3 py-1.5 rounded">
+          Вопрос {currentIdx + 1} из {questions.length}
+        </div>
+        {!confirmed && (
+          <div className={cn(
+            "flex items-center gap-1.5 text-sm font-mono font-semibold px-3 py-1.5 rounded border",
+            timeLeft <= 5 ? "text-primary border-primary/40 animate-pulse" : "text-accent border-accent/40"
+          )}>
+            <Timer className="h-3.5 w-3.5" />
+            {timeLeft}с
+          </div>
+        )}
       </div>
 
       {/* Question box */}
