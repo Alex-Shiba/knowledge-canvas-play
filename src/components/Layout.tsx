@@ -51,7 +51,15 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </Link>
         </Button>
       )}
-      <Button variant="ghost" size="sm" className="text-muted-foreground" onClick={() => { handleSignOut(); setMenuOpen(false); }}>
+      <Button
+        variant="ghost"
+        size="sm"
+        className="text-muted-foreground"
+        onClick={() => {
+          handleSignOut();
+          setMenuOpen(false);
+        }}
+      >
         <LogOut className="mr-1 h-4 w-4" />
         Выйти
       </Button>
@@ -59,8 +67,16 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   );
 
   return (
-    <div className="min-h-screen bg-background overflow-x-hidden">
-      {/* Top accent bar */}
+    <div className="relative min-h-screen overflow-x-hidden bg-background">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 h-[32rem]"
+        style={{
+          background:
+            "radial-gradient(ellipse 72% 58% at 50% 0%, hsl(var(--primary) / 0.42) 0%, hsl(var(--primary) / 0.16) 38%, transparent 72%)",
+        }}
+      />
+
       <div className="bg-primary h-1" />
 
       <header className="sticky top-0 z-50 border-b border-border/50 bg-background/95 backdrop-blur-md">
@@ -71,9 +87,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
           {user && (
             <>
-              <nav className="hidden sm:flex items-center gap-1">
-                {navLinks}
-              </nav>
+              <nav className="hidden items-center gap-1 sm:flex">{navLinks}</nav>
 
               <Button
                 variant="ghost"
@@ -88,12 +102,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </div>
 
         {user && menuOpen && (
-          <div className="sm:hidden border-t bg-card px-4 py-3 flex flex-col gap-1 animate-fade-in">
+          <div className="flex flex-col gap-1 border-t bg-card px-4 py-3 animate-fade-in sm:hidden">
             {navLinks}
           </div>
         )}
       </header>
-      <main className="overflow-x-hidden">{children}</main>
+
+      <main className="relative overflow-x-hidden">{children}</main>
     </div>
   );
 }
