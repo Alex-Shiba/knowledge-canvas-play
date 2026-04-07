@@ -70,10 +70,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <div className="relative min-h-screen overflow-x-hidden bg-background">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 h-[32rem]"
+        className="pointer-events-none absolute inset-x-0 top-0 h-[60rem]"
         style={{
           background:
-            "radial-gradient(ellipse 72% 58% at 50% 0%, hsl(var(--primary) / 0.42) 0%, hsl(var(--primary) / 0.16) 38%, transparent 72%)",
+            "radial-gradient(ellipse 90% 70% at 50% 0%, hsl(var(--primary) / 0.38) 0%, hsl(var(--primary) / 0.14) 40%, transparent 80%)",
         }}
       />
 
