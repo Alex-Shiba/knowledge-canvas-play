@@ -79,7 +79,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
       {/* Ticker */}
       <div className="bg-primary overflow-hidden whitespace-nowrap">
-        <div className="animate-marquee inline-block py-1.5 text-[11px] font-semibold uppercase tracking-[2px] text-primary-foreground">
+        <div className="animate-marquee inline-block py-2 font-display text-[13px] font-bold uppercase tracking-[3px] text-primary-foreground">
           <span className="mx-6">КТО ТЫ — НОВИЧОК, АНАЛИТИК ИЛИ СЛЕДОВАТЕЛЬ? •</span>
           <span className="mx-6">СОЛОВЬЁВ LIVE · ЭКСКЛЮЗИВ •</span>
           <span className="mx-6">ПРОВЕРЬ СВОИ ЗНАНИЯ •</span>
