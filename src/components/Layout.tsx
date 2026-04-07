@@ -67,7 +67,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   );
 
   return (
-    <div className="relative min-h-screen overflow-x-hidden bg-background">
+    <div className="relative min-h-screen bg-background overflow-clip">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute left-1/2 top-[-18rem] h-[44rem] w-[120rem] -translate-x-1/2 rounded-[50%] bg-primary/[0.10] blur-[180px]"
