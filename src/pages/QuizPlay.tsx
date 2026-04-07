@@ -26,6 +26,7 @@ interface UserAnswer {
 }
 
 const LETTERS = ["А", "Б", "В", "Г", "Д", "Е", "Ж", "З"];
+const TIME_PER_QUESTION = 15;
 
 export default function QuizPlay() {
   const { id } = useParams<{ id: string }>();
@@ -41,6 +42,8 @@ export default function QuizPlay() {
   const [finished, setFinished] = useState(false);
   const [loading, setLoading] = useState(true);
   const [checking, setChecking] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(TIME_PER_QUESTION);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const [resultDetails, setResultDetails] = useState<{ question_text: string; correct_answer: string; user_answer: string; isCorrect: boolean }[]>([]);
 
   useEffect(() => {
