@@ -42,6 +42,8 @@ export default function Admin() {
   const [editData, setEditData] = useState<{ title: string; description: string; category: string; questions: { id?: string; question_text: string; answers: { id?: string; answer_text: string; is_correct: boolean }[] }[] }>({ title: "", description: "", category: "", questions: [] });
   const [saving, setSaving] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [pasteOpen, setPasteOpen] = useState(false);
+  const [pasteText, setPasteText] = useState("");
 
   const fetchQuizzes = async () => {
     const { data } = await supabase
@@ -126,6 +128,55 @@ export default function Admin() {
     }
 
     if (fileRef.current) fileRef.current.value = "";
+  };
+
+  const handleJsonPaste = async () => {
+    try {
+      const json: JsonQuiz = JSON.parse(pasteText);
+
+      if (!json.title || !json.questions?.length) {
+        toast({ title: "Ошибка", description: "JSON должен содержать title и questions", variant: "destructive" });
+        return;
+      }
+
+      const { data: quiz, error } = await supabase
+        .from("quizzes")
+        .insert({ title: json.title, description: json.description || null, category: json.category || null, created_by: user!.id })
+        .select("id")
+        .single();
+
+      if (error || !quiz) {
+        toast({ title: "Ошибка создания квиза", description: error?.message, variant: "destructive" });
+        return;
+      }
+
+      for (let i = 0; i < json.questions.length; i++) {
+        const q = json.questions[i];
+        const { data: question } = await supabase
+          .from("questions")
+          .insert({ quiz_id: quiz.id, question_text: q.question_text, order_num: i })
+          .select("id")
+          .single();
+
+        if (question) {
+          await supabase.from("answers").insert(
+            q.answers.map((a, j) => ({
+              question_id: question.id,
+              answer_text: a.answer_text,
+              is_correct: a.is_correct,
+              order_num: j,
+            }))
+          );
+        }
+      }
+
+      toast({ title: "Квиз загружен" });
+      setPasteText("");
+      setPasteOpen(false);
+      fetchQuizzes();
+    } catch {
+      toast({ title: "Ошибка", description: "Неверный формат JSON", variant: "destructive" });
+    }
   };
 
   const togglePublish = async (quizId: string, published: boolean) => {
@@ -274,6 +325,9 @@ export default function Admin() {
           <p className="text-muted-foreground">Управление квизами</p>
         </div>
         <div className="flex gap-2">
+          <Button variant="outline" onClick={() => setPasteOpen(true)}>
+            <ClipboardPaste className="mr-1 h-4 w-4" /> Вставить JSON
+          </Button>
           <Button variant="outline" onClick={() => fileRef.current?.click()}>
             <Upload className="mr-1 h-4 w-4" /> Загрузить JSON
           </Button>
