@@ -61,20 +61,16 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
       {/* Top accent bar */}
-      <div className="bg-primary px-4 py-2 flex justify-between items-center text-[11px] uppercase tracking-wider text-primary-foreground/90">
-        <span>Проверь свои знания</span>
-        <span className="hidden sm:inline">Интерактивные квизы</span>
-        <span className="hidden md:inline">Узнай свой уровень</span>
-      </div>
+      <div className="bg-primary h-1" />
 
-      <header className="sticky top-0 z-50 border-b bg-card/95 backdrop-blur-md">
-        <div className="container flex h-14 items-center justify-between px-4">
-          <Link to="/" className="flex items-center gap-2.5 shrink-0">
-            <div className="w-7 h-7 bg-primary rounded flex items-center justify-center text-xs font-bold text-primary-foreground">
-              QF
+      <header className="sticky top-0 z-50 border-b border-border/50 bg-background/95 backdrop-blur-md">
+        <div className="container flex h-16 items-center justify-between px-4">
+          <Link to="/" className="flex items-center gap-3 shrink-0">
+            <div className="w-9 h-9 bg-primary rounded-sm flex items-center justify-center">
+              <span className="text-[10px] font-bold text-primary-foreground tracking-wider">LIVE</span>
             </div>
-            <span className="font-display text-sm font-semibold tracking-wider uppercase">
-              Quiz<span className="text-primary">Flow</span>
+            <span className="font-display text-lg font-bold tracking-wide uppercase">
+              Quiz<span className="text-primary font-bold"> Flow</span>
             </span>
           </Link>
 
