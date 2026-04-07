@@ -54,7 +54,7 @@ export default function Index() {
     <div className="container py-8 px-4 max-w-2xl">
       <div className="mb-8 text-center animate-fade-in">
         <p className="text-xs uppercase tracking-[3px] text-primary mb-4">Интерактивные квизы</p>
-        <h1 className="font-display text-4xl font-bold uppercase leading-tight md:text-5xl">
+        <h1 className="text-4xl font-bold uppercase leading-tight md:text-5xl" style={{ fontFamily: "'Oswald', sans-serif" }}>
           Проверь свои<br /><span className="text-primary">знания</span>
         </h1>
         <p className="mt-4 text-muted-foreground italic max-w-md mx-auto">
