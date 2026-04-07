@@ -250,7 +250,7 @@ export default function QuizPlay() {
       </div>
 
       {/* Question box */}
-      <div className="bg-[hsl(0_0%_3%/0.5)] border-l-[3px] border-l-accent pl-5 pr-4 py-5 mb-6 rounded-r-md">
+      <div className="bg-[hsl(0_0%_3%/0.5)] border-l-[3px] border-l-accent pl-5 pr-4 py-5 mb-6 rounded-r-md select-none" onCopy={(e) => e.preventDefault()}>
         <p className="text-lg leading-relaxed italic">{current.question_text}</p>
         <p className="text-muted-foreground text-sm mt-3 italic">Выберите правильный ответ</p>
       </div>
