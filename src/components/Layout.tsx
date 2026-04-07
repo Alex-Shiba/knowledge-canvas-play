@@ -65,13 +65,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
       <header className="sticky top-0 z-50 border-b border-border/50 bg-background/95 backdrop-blur-md">
         <div className="container flex h-16 items-center justify-between px-4">
-          <Link to="/" className="flex items-center gap-3 shrink-0">
-            <div className="w-9 h-9 bg-primary rounded-sm flex items-center justify-center">
-              <span className="text-[10px] font-bold text-primary-foreground tracking-wider">LIVE</span>
-            </div>
-            <span className="font-display text-lg font-bold tracking-wide uppercase">
-              Соловьёв<span className="text-primary font-bold"> LIVE</span>
-            </span>
+          <Link to="/" className="shrink-0">
+            <img src="/logo_main.svg" alt="Соловьёв LIVE" className="h-10" />
           </Link>
 
           {user && (
