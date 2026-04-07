@@ -10,7 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
-import { Plus, Upload, Pencil, Trash2, Users, BarChart3 } from "lucide-react";
+import { Plus, Upload, Pencil, Trash2, Users, BarChart3, ClipboardPaste } from "lucide-react";
 
 interface QuizRow {
   id: string;
