@@ -464,6 +464,23 @@ export default function Admin() {
           </div>
         </DialogContent>
       </Dialog>
+
+      <Dialog open={pasteOpen} onOpenChange={setPasteOpen}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle className="font-display">Вставить JSON</DialogTitle>
+          </DialogHeader>
+          <Textarea
+            placeholder='{"title": "...", "questions": [...]}'
+            value={pasteText}
+            onChange={(e) => setPasteText(e.target.value)}
+            className="min-h-[200px] font-mono text-xs"
+          />
+          <Button onClick={handleJsonPaste} disabled={!pasteText.trim()}>
+            Загрузить
+          </Button>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
