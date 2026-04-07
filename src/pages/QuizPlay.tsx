@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
-import { CheckCircle2, XCircle, ArrowRight, Trophy, RotateCcw } from "lucide-react";
+import { CheckCircle2, XCircle, ArrowRight, Trophy, RotateCcw, Timer } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface Answer {
@@ -26,6 +26,7 @@ interface UserAnswer {
 }
 
 const LETTERS = ["А", "Б", "В", "Г", "Д", "Е", "Ж", "З"];
+const TIME_PER_QUESTION = 15;
 
 export default function QuizPlay() {
   const { id } = useParams<{ id: string }>();
@@ -41,6 +42,8 @@ export default function QuizPlay() {
   const [finished, setFinished] = useState(false);
   const [loading, setLoading] = useState(true);
   const [checking, setChecking] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(TIME_PER_QUESTION);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const [resultDetails, setResultDetails] = useState<{ question_text: string; correct_answer: string; user_answer: string; isCorrect: boolean }[]>([]);
 
   useEffect(() => {
@@ -59,9 +62,41 @@ export default function QuizPlay() {
 
   const current = questions[currentIdx];
 
+  // Auto-confirm with no answer when time runs out
+  const handleTimeUp = useCallback(async () => {
+    if (confirmed || finished || !current) return;
+    // Record as wrong answer with no selection
+    setUserAnswers((prev) => [
+      ...prev,
+      { questionId: current.id, answerId: "", isCorrect: false },
+    ]);
+    setConfirmed(true);
+  }, [confirmed, finished, current]);
+
+  // Timer effect
+  useEffect(() => {
+    if (loading || finished || confirmed) {
+      if (timerRef.current) clearInterval(timerRef.current);
+      return;
+    }
+    setTimeLeft(TIME_PER_QUESTION);
+    timerRef.current = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev <= 1) {
+          if (timerRef.current) clearInterval(timerRef.current);
+          handleTimeUp();
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => { if (timerRef.current) clearInterval(timerRef.current); };
+  }, [currentIdx, loading, finished, confirmed, handleTimeUp]);
+
   const handleConfirm = async () => {
     if (!selectedAnswer || !current) return;
     setChecking(true);
+    if (timerRef.current) clearInterval(timerRef.current);
     const { data: isCorrect } = await supabase.rpc("check_answer", { _answer_id: selectedAnswer });
     const correct = !!isCorrect;
     setAnswerCorrectMap((prev) => ({ ...prev, [selectedAnswer]: correct }));
@@ -198,9 +233,20 @@ export default function QuizPlay() {
         ))}
       </div>
 
-      {/* Question label */}
-      <div className="inline-block border border-accent/40 text-accent text-[10px] uppercase tracking-wider px-3 py-1.5 rounded mb-5">
-        Вопрос {currentIdx + 1} из {questions.length}
+      {/* Question label + Timer */}
+      <div className="flex items-center justify-between mb-5">
+        <div className="inline-block border border-accent/40 text-accent text-[10px] uppercase tracking-wider px-3 py-1.5 rounded">
+          Вопрос {currentIdx + 1} из {questions.length}
+        </div>
+        {!confirmed && (
+          <div className={cn(
+            "flex items-center gap-1.5 text-sm font-mono font-semibold px-3 py-1.5 rounded border",
+            timeLeft <= 5 ? "text-primary border-primary/40 animate-pulse" : "text-accent border-accent/40"
+          )}>
+            <Timer className="h-3.5 w-3.5" />
+            {timeLeft}с
+          </div>
+        )}
       </div>
 
       {/* Question box */}
@@ -246,6 +292,13 @@ export default function QuizPlay() {
           );
         })}
       </div>
+
+      {/* Time up message */}
+      {confirmed && !selectedAnswer && (
+        <div className="text-center text-primary font-semibold text-sm mb-4 uppercase tracking-wider">
+          ⏰ Время вышло!
+        </div>
+      )}
 
       {/* Action button */}
       {!confirmed ? (
