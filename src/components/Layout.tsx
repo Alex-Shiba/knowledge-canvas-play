@@ -70,11 +70,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <div className="relative min-h-screen overflow-x-hidden bg-background">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute left-1/2 top-[-18rem] h-[44rem] w-[120rem] -translate-x-1/2 rounded-[50%] bg-primary/20 blur-[180px]"
+        className="pointer-events-none absolute left-1/2 top-[-18rem] h-[44rem] w-[120rem] -translate-x-1/2 rounded-[50%] bg-primary/[0.14] blur-[180px]"
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute left-1/2 top-[-4rem] h-[34rem] w-[96rem] -translate-x-1/2 rounded-[50%] bg-primary/10 blur-[140px]"
+        className="pointer-events-none absolute left-1/2 top-[-4rem] h-[34rem] w-[96rem] -translate-x-1/2 rounded-[50%] bg-primary/[0.07] blur-[140px]"
       />
       <div
         aria-hidden="true"
