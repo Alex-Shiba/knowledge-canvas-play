@@ -4,8 +4,6 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Brain } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 export default function Auth() {
@@ -62,38 +60,40 @@ export default function Auth() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background p-4">
-      <Card className="w-full max-w-md animate-fade-in">
-        <CardHeader className="text-center">
-          <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10">
-            <Brain className="h-6 w-6 text-primary" />
+      <div className="w-full max-w-sm animate-fade-in">
+        {/* Logo */}
+        <div className="text-center mb-8">
+          <div className="mx-auto mb-4 w-10 h-10 bg-primary rounded flex items-center justify-center text-sm font-bold text-primary-foreground">
+            QF
           </div>
-          <CardTitle className="font-display text-2xl">
-            {mode === "login" && "Вход в QuizFlow"}
-            {mode === "register" && "Регистрация"}
-            {mode === "forgot" && "Сброс пароля"}
-          </CardTitle>
-          <CardDescription>
+          <h1 className="font-display text-2xl font-bold uppercase tracking-wider">
+            Quiz<span className="text-primary">Flow</span>
+          </h1>
+          <p className="text-muted-foreground text-sm mt-2">
             {mode === "login" && "Введите данные для входа"}
-            {mode === "register" && "Создайте аккаунт для прохождения квизов"}
-            {mode === "forgot" && "Введите email для получения ссылки сброса"}
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
+            {mode === "register" && "Создайте аккаунт"}
+            {mode === "forgot" && "Введите email для сброса"}
+          </p>
+        </div>
+
+        {/* Form */}
+        <div className="rounded-lg border border-border bg-card p-6">
           <form onSubmit={handleSubmit} className="space-y-4">
             {mode === "register" && (
               <div className="space-y-2">
-                <Label htmlFor="name">Имя</Label>
+                <Label htmlFor="name" className="text-xs uppercase tracking-wider text-muted-foreground">Имя</Label>
                 <Input
                   id="name"
                   value={displayName}
                   onChange={(e) => setDisplayName(e.target.value)}
                   placeholder="Ваше имя"
                   required
+                  className="bg-background border-border"
                 />
               </div>
             )}
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email" className="text-xs uppercase tracking-wider text-muted-foreground">Email</Label>
               <Input
                 id="email"
                 type="email"
@@ -101,11 +101,12 @@ export default function Auth() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="email@example.com"
                 required
+                className="bg-background border-border"
               />
             </div>
             {mode !== "forgot" && (
               <div className="space-y-2">
-                <Label htmlFor="password">Пароль</Label>
+                <Label htmlFor="password" className="text-xs uppercase tracking-wider text-muted-foreground">Пароль</Label>
                 <Input
                   id="password"
                   type="password"
@@ -114,10 +115,11 @@ export default function Auth() {
                   placeholder="••••••••"
                   required
                   minLength={6}
+                  className="bg-background border-border"
                 />
               </div>
             )}
-            <Button type="submit" className="w-full" disabled={loading}>
+            <Button type="submit" className="w-full uppercase tracking-wider text-xs py-5" disabled={loading}>
               {loading ? "Загрузка..." : mode === "login" ? "Войти" : mode === "register" ? "Зарегистрироваться" : "Отправить ссылку"}
             </Button>
           </form>
@@ -125,28 +127,28 @@ export default function Auth() {
           <div className="mt-4 text-center text-sm text-muted-foreground">
             {mode === "login" && (
               <>
-                <button onClick={() => setMode("forgot")} className="text-primary hover:underline">
+                <button onClick={() => setMode("forgot")} className="text-accent hover:underline">
                   Забыли пароль?
                 </button>
-                <span className="mx-2">·</span>
-                <button onClick={() => setMode("register")} className="text-primary hover:underline">
+                <span className="mx-2 text-border">·</span>
+                <button onClick={() => setMode("register")} className="text-accent hover:underline">
                   Создать аккаунт
                 </button>
               </>
             )}
             {mode === "register" && (
-              <button onClick={() => setMode("login")} className="text-primary hover:underline">
+              <button onClick={() => setMode("login")} className="text-accent hover:underline">
                 Уже есть аккаунт? Войти
               </button>
             )}
             {mode === "forgot" && (
-              <button onClick={() => setMode("login")} className="text-primary hover:underline">
+              <button onClick={() => setMode("login")} className="text-accent hover:underline">
                 Вернуться к входу
               </button>
             )}
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 }

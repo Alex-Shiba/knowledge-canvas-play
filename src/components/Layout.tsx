@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
-import { LogOut, LayoutDashboard, BarChart3, Brain, Menu, X } from "lucide-react";
+import { LogOut, LayoutDashboard, BarChart3, Menu, X } from "lucide-react";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const { user, isAdmin, signOut } = useAuth();
@@ -60,21 +60,30 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
-      <header className="sticky top-0 z-50 border-b bg-card/80 backdrop-blur-md">
+      {/* Top accent bar */}
+      <div className="bg-primary px-4 py-2 flex justify-between items-center text-[11px] uppercase tracking-wider text-primary-foreground/90">
+        <span>Проверь свои знания</span>
+        <span className="hidden sm:inline">Интерактивные квизы</span>
+        <span className="hidden md:inline">Узнай свой уровень</span>
+      </div>
+
+      <header className="sticky top-0 z-50 border-b bg-card/95 backdrop-blur-md">
         <div className="container flex h-14 items-center justify-between px-4">
-          <Link to="/" className="flex items-center gap-2 shrink-0">
-            <Brain className="h-5 w-5 text-primary" />
-            <span className="font-display text-lg font-bold">QuizFlow</span>
+          <Link to="/" className="flex items-center gap-2.5 shrink-0">
+            <div className="w-7 h-7 bg-primary rounded flex items-center justify-center text-xs font-bold text-primary-foreground">
+              QF
+            </div>
+            <span className="font-display text-sm font-semibold tracking-wider uppercase">
+              Quiz<span className="text-primary">Flow</span>
+            </span>
           </Link>
 
           {user && (
             <>
-              {/* Desktop nav */}
               <nav className="hidden sm:flex items-center gap-1">
                 {navLinks}
               </nav>
 
-              {/* Mobile hamburger */}
               <Button
                 variant="ghost"
                 size="icon"
@@ -87,7 +96,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           )}
         </div>
 
-        {/* Mobile dropdown */}
         {user && menuOpen && (
           <div className="sm:hidden border-t bg-card px-4 py-3 flex flex-col gap-1 animate-fade-in">
             {navLinks}

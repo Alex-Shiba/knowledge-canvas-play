@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Search, BookOpen, ArrowRight } from "lucide-react";
@@ -52,20 +51,25 @@ export default function Index() {
   const categories = [...new Set(quizzes.map((q) => q.category).filter(Boolean))];
 
   return (
-    <div className="container py-6 px-4">
-      <div className="mb-8 animate-fade-in">
-        <h1 className="font-display text-3xl font-bold md:text-4xl">Квизы</h1>
-        <p className="mt-2 text-muted-foreground">Выберите квиз и проверьте свои знания</p>
+    <div className="container py-8 px-4 max-w-2xl">
+      <div className="mb-8 text-center animate-fade-in">
+        <p className="text-xs uppercase tracking-[3px] text-primary mb-4">Интерактивные квизы</p>
+        <h1 className="font-display text-4xl font-bold uppercase leading-tight md:text-5xl">
+          Проверь свои<br /><span className="text-primary">знания</span>
+        </h1>
+        <p className="mt-4 text-muted-foreground italic max-w-md mx-auto">
+          Выберите квиз, ответьте на вопросы и узнайте свой уровень знаний
+        </p>
       </div>
 
-      <div className="mb-6 flex flex-wrap items-center gap-3">
-        <div className="relative flex-1 min-w-[200px]">
+      <div className="mb-6">
+        <div className="relative">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input
             placeholder="Поиск по названию или категории..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="pl-9"
+            className="pl-9 bg-card border-border"
           />
         </div>
       </div>
@@ -93,12 +97,12 @@ export default function Index() {
       )}
 
       {loading ? (
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="space-y-4">
           {[1, 2, 3].map((i) => (
-            <Card key={i} className="animate-pulse">
-              <CardHeader><div className="h-5 w-2/3 rounded bg-muted" /><div className="mt-2 h-4 w-full rounded bg-muted" /></CardHeader>
-              <CardContent><div className="h-8 w-24 rounded bg-muted" /></CardContent>
-            </Card>
+            <div key={i} className="animate-pulse rounded-lg border border-border bg-card p-5">
+              <div className="h-5 w-2/3 rounded bg-muted mb-2" />
+              <div className="h-4 w-full rounded bg-muted" />
+            </div>
           ))}
         </div>
       ) : filtered.length === 0 ? (
@@ -107,38 +111,40 @@ export default function Index() {
           <p className="text-lg">Квизы не найдены</p>
         </div>
       ) : (
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="space-y-3">
           {filtered.map((quiz, i) => (
-            <Card
+            <Link
               key={quiz.id}
-              className="group transition-all hover:shadow-lg hover:border-primary/30 animate-fade-in"
+              to={`/quiz/${quiz.id}`}
+              className="group block rounded-lg border border-border bg-[hsl(0_0%_3%/0.5)] p-5 transition-all hover:bg-card hover:border-primary/30 animate-fade-in"
               style={{ animationDelay: `${i * 50}ms` }}
             >
-              <CardHeader>
-                <div className="flex items-start justify-between">
-                  <CardTitle className="text-lg font-display">{quiz.title}</CardTitle>
-                  {quiz.category && (
-                    <Badge variant="secondary" className="shrink-0 ml-2">{quiz.category}</Badge>
-                  )}
+              <div className="flex items-start justify-between gap-3">
+                <div className="flex items-start gap-4 min-w-0">
+                  <div className="text-2xl shrink-0 mt-0.5">🎯</div>
+                  <div className="min-w-0">
+                    <h3 className="text-xs uppercase tracking-wider text-accent mb-1.5">
+                      {quiz.category || "Квиз"}
+                    </h3>
+                    <p className="font-medium text-foreground">{quiz.title}</p>
+                    {quiz.description && (
+                      <p className="mt-1 text-sm text-muted-foreground line-clamp-2">{quiz.description}</p>
+                    )}
+                    <p className="mt-2 text-xs text-muted-foreground">
+                      {quiz.question_count} {quiz.question_count === 1 ? "вопрос" : quiz.question_count < 5 ? "вопроса" : "вопросов"}
+                    </p>
+                  </div>
                 </div>
-                {quiz.description && (
-                  <CardDescription className="line-clamp-2">{quiz.description}</CardDescription>
-                )}
-              </CardHeader>
-              <CardContent className="flex items-center justify-between">
-                <span className="text-sm text-muted-foreground">
-                  {quiz.question_count} {quiz.question_count === 1 ? "вопрос" : quiz.question_count < 5 ? "вопроса" : "вопросов"}
-                </span>
-                <Button size="sm" asChild className="group-hover:translate-x-0.5 transition-transform">
-                  <Link to={`/quiz/${quiz.id}`}>
-                    Начать <ArrowRight className="ml-1 h-4 w-4" />
-                  </Link>
-                </Button>
-              </CardContent>
-            </Card>
+                <ArrowRight className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors shrink-0 mt-1" />
+              </div>
+            </Link>
           ))}
         </div>
       )}
+
+      <div className="mt-12 text-center text-xs tracking-[3px] text-muted-foreground/50 uppercase">
+        Quiz<span className="text-primary/50">Flow</span>
+      </div>
     </div>
   );
 }
