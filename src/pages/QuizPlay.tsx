@@ -62,9 +62,41 @@ export default function QuizPlay() {
 
   const current = questions[currentIdx];
 
+  // Auto-confirm with no answer when time runs out
+  const handleTimeUp = useCallback(async () => {
+    if (confirmed || finished || !current) return;
+    // Record as wrong answer with no selection
+    setUserAnswers((prev) => [
+      ...prev,
+      { questionId: current.id, answerId: "", isCorrect: false },
+    ]);
+    setConfirmed(true);
+  }, [confirmed, finished, current]);
+
+  // Timer effect
+  useEffect(() => {
+    if (loading || finished || confirmed) {
+      if (timerRef.current) clearInterval(timerRef.current);
+      return;
+    }
+    setTimeLeft(TIME_PER_QUESTION);
+    timerRef.current = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev <= 1) {
+          if (timerRef.current) clearInterval(timerRef.current);
+          handleTimeUp();
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => { if (timerRef.current) clearInterval(timerRef.current); };
+  }, [currentIdx, loading, finished, confirmed, handleTimeUp]);
+
   const handleConfirm = async () => {
     if (!selectedAnswer || !current) return;
     setChecking(true);
+    if (timerRef.current) clearInterval(timerRef.current);
     const { data: isCorrect } = await supabase.rpc("check_answer", { _answer_id: selectedAnswer });
     const correct = !!isCorrect;
     setAnswerCorrectMap((prev) => ({ ...prev, [selectedAnswer]: correct }));
