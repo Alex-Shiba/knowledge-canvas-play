@@ -59,11 +59,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   );
 
   return (
-    <div className="min-h-screen bg-background overflow-x-hidden">
+    <div className="relative min-h-screen overflow-x-hidden bg-transparent">
+      <div className="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(ellipse_70%_40%_at_50%_0%,hsl(var(--primary)/0.3)_0%,transparent_70%)]" />
+
       {/* Top accent bar */}
       <div className="bg-primary h-1" />
 
-      <header className="sticky top-0 z-50 border-b border-border/50 bg-background/95 backdrop-blur-md">
         <div className="container flex h-16 items-center justify-between px-4">
           <Link to="/" className="shrink-0">
             <img src="/logo_main.svg" alt="Соловьёв LIVE" className="h-7" />
