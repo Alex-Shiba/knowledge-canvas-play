@@ -70,7 +70,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <span className="text-[10px] font-bold text-primary-foreground tracking-wider">LIVE</span>
             </div>
             <span className="font-display text-lg font-bold tracking-wide uppercase">
-              Quiz<span className="text-primary font-bold"> Flow</span>
+              Соловьёв<span className="text-primary font-bold"> LIVE</span>
             </span>
           </Link>
 
