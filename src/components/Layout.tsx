@@ -77,7 +77,19 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         }}
       />
 
-      <div className="bg-primary h-1" />
+      {/* Ticker */}
+      <div className="bg-primary overflow-hidden whitespace-nowrap">
+        <div className="animate-marquee inline-block py-1.5 text-[11px] font-semibold uppercase tracking-[2px] text-primary-foreground">
+          <span className="mx-6">КТО ТЫ — НОВИЧОК, АНАЛИТИК ИЛИ СЛЕДОВАТЕЛЬ? •</span>
+          <span className="mx-6">СОЛОВЬЁВ LIVE · ЭКСКЛЮЗИВ •</span>
+          <span className="mx-6">ПРОВЕРЬ СВОИ ЗНАНИЯ •</span>
+          <span className="mx-6">12 ВОПРОСОВ О ГЕОПОЛИТИКЕ •</span>
+          <span className="mx-6">КТО ТЫ — НОВИЧОК, АНАЛИТИК ИЛИ СЛЕДОВАТЕЛЬ? •</span>
+          <span className="mx-6">СОЛОВЬЁВ LIVE · ЭКСКЛЮЗИВ •</span>
+          <span className="mx-6">ПРОВЕРЬ СВОИ ЗНАНИЯ •</span>
+          <span className="mx-6">12 ВОПРОСОВ О ГЕОПОЛИТИКЕ •</span>
+        </div>
+      </div>
 
       <header className="sticky top-0 z-50 border-b border-border/50 bg-background/95 backdrop-blur-md">
         <div className="container flex h-16 items-center justify-between px-4">
