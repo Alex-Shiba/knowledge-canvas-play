@@ -293,6 +293,13 @@ export default function QuizPlay() {
         })}
       </div>
 
+      {/* Time up message */}
+      {confirmed && !selectedAnswer && (
+        <div className="text-center text-primary font-semibold text-sm mb-4 uppercase tracking-wider">
+          ⏰ Время вышло!
+        </div>
+      )}
+
       {/* Action button */}
       {!confirmed ? (
         <Button onClick={handleConfirm} disabled={!selectedAnswer || checking} className="uppercase tracking-wider text-xs py-5 w-full">
