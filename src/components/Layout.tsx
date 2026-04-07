@@ -79,15 +79,15 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
       {/* Ticker */}
       <div className="bg-primary overflow-hidden whitespace-nowrap">
-        <div className="animate-marquee inline-block py-2 font-display text-[13px] font-bold uppercase tracking-[3px] text-primary-foreground">
-          <span className="mx-6">КТО ТЫ — НОВИЧОК, АНАЛИТИК ИЛИ СЛЕДОВАТЕЛЬ? •</span>
-          <span className="mx-6">СОЛОВЬЁВ LIVE · ЭКСКЛЮЗИВ •</span>
-          <span className="mx-6">ПРОВЕРЬ СВОИ ЗНАНИЯ •</span>
-          <span className="mx-6">12 ВОПРОСОВ О ГЕОПОЛИТИКЕ •</span>
-          <span className="mx-6">КТО ТЫ — НОВИЧОК, АНАЛИТИК ИЛИ СЛЕДОВАТЕЛЬ? •</span>
-          <span className="mx-6">СОЛОВЬЁВ LIVE · ЭКСКЛЮЗИВ •</span>
-          <span className="mx-6">ПРОВЕРЬ СВОИ ЗНАНИЯ •</span>
-          <span className="mx-6">12 ВОПРОСОВ О ГЕОПОЛИТИКЕ •</span>
+        <div className="animate-marquee inline-block py-2 text-[13px] font-bold uppercase text-primary-foreground" style={{ fontFamily: "'Oswald', sans-serif", letterSpacing: '2px' }}>
+          <span className="mx-16">КТО ТЫ — НОВИЧОК, АНАЛИТИК ИЛИ СЛЕДОВАТЕЛЬ? •</span>
+          <span className="mx-16">СОЛОВЬЁВ LIVE · ЭКСКЛЮЗИВ •</span>
+          <span className="mx-16">ПРОВЕРЬ СВОИ ЗНАНИЯ •</span>
+          <span className="mx-16">12 ВОПРОСОВ О ГЕОПОЛИТИКЕ •</span>
+          <span className="mx-16">КТО ТЫ — НОВИЧОК, АНАЛИТИК ИЛИ СЛЕДОВАТЕЛЬ? •</span>
+          <span className="mx-16">СОЛОВЬЁВ LIVE · ЭКСКЛЮЗИВ •</span>
+          <span className="mx-16">ПРОВЕРЬ СВОИ ЗНАНИЯ •</span>
+          <span className="mx-16">12 ВОПРОСОВ О ГЕОПОЛИТИКЕ •</span>
         </div>
       </div>
 
