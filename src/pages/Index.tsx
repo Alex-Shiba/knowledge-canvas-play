@@ -143,7 +143,7 @@ export default function Index() {
       )}
 
       <div className="mt-12 text-center text-xs tracking-[3px] text-muted-foreground/50 uppercase">
-        Quiz<span className="text-primary/50">Flow</span>
+        Соловьёв<span className="text-primary/50"> LIVE</span>
       </div>
     </div>
   );
