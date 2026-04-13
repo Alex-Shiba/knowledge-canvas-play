@@ -9,8 +9,8 @@ interface AuthContextType {
   isAdmin: boolean;
   signUp: (email: string, password: string, displayName: string) => Promise<{ error: Error | null }>;
   signIn: (email: string, password: string) => Promise<{ error: Error | null }>;
-  signInWithPhone: (phone: string) => Promise<{ error: Error | null }>;
-  verifyOtp: (phone: string, token: string) => Promise<{ error: Error | null }>;
+  sendPhoneOtp: (phone: string) => Promise<{ error: Error | null }>;
+  verifyPhoneOtp: (phone: string, code: string) => Promise<{ error: Error | null }>;
   signOut: () => Promise<void>;
   resetPassword: (email: string) => Promise<{ error: Error | null }>;
 }
@@ -76,14 +76,40 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return { error: error as Error | null };
   };
 
-  const signInWithPhone = async (phone: string) => {
-    const { error } = await supabase.auth.signInWithOtp({ phone });
-    return { error: error as Error | null };
+  const sendPhoneOtp = async (phone: string) => {
+    try {
+      const { data, error } = await supabase.functions.invoke("phone-otp", {
+        body: { action: "send", phone },
+      });
+      if (error) return { error: new Error(error.message) };
+      if (data?.error) return { error: new Error(data.error) };
+      return { error: null };
+    } catch (e) {
+      return { error: e as Error };
+    }
   };
 
-  const verifyOtp = async (phone: string, token: string) => {
-    const { error } = await supabase.auth.verifyOtp({ phone, token, type: "sms" });
-    return { error: error as Error | null };
+  const verifyPhoneOtp = async (phone: string, code: string) => {
+    try {
+      const { data, error } = await supabase.functions.invoke("phone-otp", {
+        body: { action: "verify", phone, code },
+      });
+      if (error) return { error: new Error(error.message) };
+      if (data?.error) return { error: new Error(data.error) };
+
+      // Set the session from the returned tokens
+      if (data?.session) {
+        const { error: sessionError } = await supabase.auth.setSession({
+          access_token: data.session.access_token,
+          refresh_token: data.session.refresh_token,
+        });
+        if (sessionError) return { error: sessionError as Error };
+      }
+
+      return { error: null };
+    } catch (e) {
+      return { error: e as Error };
+    }
   };
 
   const signOut = async () => {
@@ -98,7 +124,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, session, loading, isAdmin, signUp, signIn, signInWithPhone, verifyOtp, signOut, resetPassword }}>
+    <AuthContext.Provider value={{ user, session, loading, isAdmin, signUp, signIn, sendPhoneOtp, verifyPhoneOtp, signOut, resetPassword }}>
       {children}
     </AuthContext.Provider>
   );
