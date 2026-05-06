@@ -60,7 +60,7 @@ export default function Auth() {
                 type="tel"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                placeholder="+996555703050"
+                placeholder="+74951234567"
                 required
                 className="bg-background border-border"
               />
