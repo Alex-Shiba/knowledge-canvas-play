@@ -301,6 +301,14 @@ export default function QuizPlay() {
         </div>
       )}
 
+      {/* Explanation */}
+      {confirmed && current.explanation && (
+        <div className="mb-4 rounded-md border border-accent/40 bg-accent/5 p-4 animate-fade-in">
+          <p className="text-[11px] uppercase tracking-wider text-accent mb-2 font-semibold">Пояснение</p>
+          <p className="text-sm leading-relaxed text-foreground/90">{current.explanation}</p>
+        </div>
+      )}
+
       {/* Action button */}
       {!confirmed ? (
         <Button onClick={handleConfirm} disabled={!selectedAnswer || checking} className="uppercase tracking-wider text-xs py-5 w-full">
