@@ -69,6 +69,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           refresh_token: data.session.refresh_token,
         });
         if (sessionError) return { error: sessionError as Error };
+        const { data: sessionData } = await supabase.auth.getSession();
+        setSession(sessionData.session);
+        setUser(sessionData.session?.user ?? null);
       }
       return { error: null };
     } catch (e) {
