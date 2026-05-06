@@ -61,9 +61,6 @@ Deno.serve(async (req) => {
       password: tempPassword,
     });
 
-    // Rotate password so the temp value can't be reused
-    await supabase.auth.admin.updateUserById(user.id, { password: crypto.randomUUID() });
-
     if (signInError || !signInData.session) {
       console.error("Sign in error:", signInError);
       return new Response(JSON.stringify({ error: "Ошибка авторизации" }), {
