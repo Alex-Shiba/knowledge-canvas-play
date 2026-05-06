@@ -7,12 +7,8 @@ interface AuthContextType {
   session: Session | null;
   loading: boolean;
   isAdmin: boolean;
-  signUp: (email: string, password: string, displayName: string) => Promise<{ error: Error | null }>;
-  signIn: (email: string, password: string) => Promise<{ error: Error | null }>;
-  sendPhoneOtp: (phone: string) => Promise<{ error: Error | null }>;
-  verifyPhoneOtp: (phone: string, code: string) => Promise<{ error: Error | null }>;
+  phoneLogin: (phone: string) => Promise<{ error: Error | null }>;
   signOut: () => Promise<void>;
-  resetPassword: (email: string) => Promise<{ error: Error | null }>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -59,45 +55,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return () => subscription.unsubscribe();
   }, []);
 
-  const signUp = async (email: string, password: string, displayName: string) => {
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: { display_name: displayName },
-        emailRedirectTo: window.location.origin,
-      },
-    });
-    return { error: error as Error | null };
-  };
-
-  const signIn = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    return { error: error as Error | null };
-  };
-
-  const sendPhoneOtp = async (phone: string) => {
+  const phoneLogin = async (phone: string) => {
     try {
       const { data, error } = await supabase.functions.invoke("phone-otp", {
-        body: { action: "send", phone },
-      });
-      if (error) return { error: new Error(error.message) };
-      if (data?.error) return { error: new Error(data.error) };
-      return { error: null };
-    } catch (e) {
-      return { error: e as Error };
-    }
-  };
-
-  const verifyPhoneOtp = async (phone: string, code: string) => {
-    try {
-      const { data, error } = await supabase.functions.invoke("phone-otp", {
-        body: { action: "verify", phone, code },
+        body: { phone },
       });
       if (error) return { error: new Error(error.message) };
       if (data?.error) return { error: new Error(data.error) };
 
-      // Set the session from the returned tokens
       if (data?.session) {
         const { error: sessionError } = await supabase.auth.setSession({
           access_token: data.session.access_token,
@@ -105,7 +70,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         });
         if (sessionError) return { error: sessionError as Error };
       }
-
       return { error: null };
     } catch (e) {
       return { error: e as Error };
@@ -116,15 +80,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     await supabase.auth.signOut();
   };
 
-  const resetPassword = async (email: string) => {
-    const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${window.location.origin}/reset-password`,
-    });
-    return { error: error as Error | null };
-  };
-
   return (
-    <AuthContext.Provider value={{ user, session, loading, isAdmin, signUp, signIn, sendPhoneOtp, verifyPhoneOtp, signOut, resetPassword }}>
+    <AuthContext.Provider value={{ user, session, loading, isAdmin, phoneLogin, signOut }}>
       {children}
     </AuthContext.Provider>
   );
