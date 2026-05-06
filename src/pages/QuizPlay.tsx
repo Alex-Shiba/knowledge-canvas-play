@@ -15,6 +15,7 @@ interface Answer {
 interface Question {
   id: string;
   question_text: string;
+  explanation: string | null;
   order_num: number;
   answers: Answer[];
 }
@@ -297,6 +298,14 @@ export default function QuizPlay() {
       {confirmed && !selectedAnswer && (
         <div className="text-center text-primary font-semibold text-sm mb-4 uppercase tracking-wider">
           ⏰ Время вышло!
+        </div>
+      )}
+
+      {/* Explanation */}
+      {confirmed && current.explanation && (
+        <div className="mb-4 rounded-md border border-accent/40 bg-accent/5 p-4 animate-fade-in">
+          <p className="text-[11px] uppercase tracking-wider text-accent mb-2 font-semibold">Пояснение</p>
+          <p className="text-sm leading-relaxed text-foreground/90">{current.explanation}</p>
         </div>
       )}
 
