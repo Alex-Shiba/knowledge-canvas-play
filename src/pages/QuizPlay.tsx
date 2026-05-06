@@ -15,6 +15,7 @@ interface Answer {
 interface Question {
   id: string;
   question_text: string;
+  explanation: string | null;
   order_num: number;
   answers: Answer[];
 }
