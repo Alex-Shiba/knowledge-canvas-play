@@ -1,9 +1,9 @@
 import { useEffect, useState, useRef, useCallback } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
-import { CheckCircle2, XCircle, ArrowRight, Trophy, RotateCcw, Timer } from "lucide-react";
+import { CheckCircle2, XCircle, ArrowRight, Trophy, Timer, Gift } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface Answer {
@@ -32,7 +32,7 @@ const TIME_PER_QUESTION = 15;
 export default function QuizPlay() {
   const { id } = useParams<{ id: string }>();
   const { user } = useAuth();
-  const navigate = useNavigate();
+  
   const [quizTitle, setQuizTitle] = useState("");
   const [questions, setQuestions] = useState<Question[]>([]);
   const [currentIdx, setCurrentIdx] = useState(0);
@@ -173,12 +173,12 @@ export default function QuizPlay() {
               key={i}
               className={cn(
                 "rounded-lg border p-4",
-                item.isCorrect ? "border-success/30 bg-success/5" : "border-primary/30 bg-primary/5"
+                item.isCorrect ? "border-green-500/40 bg-green-500/10" : "border-primary/30 bg-primary/5"
               )}
             >
               <div className="flex items-start gap-3">
                 {item.isCorrect ? (
-                  <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-success" />
+                  <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-green-500" />
                 ) : (
                   <XCircle className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
                 )}
@@ -195,13 +195,20 @@ export default function QuizPlay() {
           ))}
         </div>
 
-        <div className="flex gap-3 mt-6">
-          <Button variant="outline" onClick={() => navigate("/")} className="flex-1">
-            К квизам
-          </Button>
-          <Button onClick={() => window.location.reload()} className="flex-1">
-            <RotateCcw className="mr-1 h-4 w-4" /> Пройти снова
-          </Button>
+        <div className="mt-6 rounded-lg border border-accent/40 bg-accent/5 p-5 animate-fade-in">
+          <div className="flex items-start gap-3">
+            <Gift className="mt-0.5 h-6 w-6 shrink-0 text-accent" />
+            <div>
+              <p className="font-display font-semibold text-base mb-1.5">
+                {score === questions.length ? "Поздравляем!" : "Спасибо за участие!"}
+              </p>
+              <p className="text-sm leading-relaxed text-foreground/90">
+                {score === questions.length
+                  ? "Вы ответили правильно на все вопросы и попадаете в розыгрыш призов. Победитель будет выбран случайным образом среди всех участников, прошедших квиз без ошибок."
+                  : "В розыгрыше призов участвуют только те, кто ответил правильно на все вопросы. Удачи в следующий раз!"}
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     );
