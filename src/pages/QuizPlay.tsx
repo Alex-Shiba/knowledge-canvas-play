@@ -280,7 +280,7 @@ export default function QuizPlay() {
                 "w-full rounded-md border p-4 text-left transition-all flex items-center gap-3.5",
                 !confirmed && !isSelected && "border-border bg-[hsl(0_0%_5%)] hover:bg-[hsl(0_0%_8%)] hover:border-muted-foreground/30",
                 !confirmed && isSelected && "border-success bg-success/10",
-                showCorrect && "border-success bg-success/15",
+                showCorrect && "border-green-500 bg-green-500/15",
                 showWrong && "border-primary bg-primary/10",
                 (confirmed || checking) && "cursor-default"
               )}
@@ -288,13 +288,14 @@ export default function QuizPlay() {
               <span className={cn(
                 "w-7 h-7 rounded-full flex items-center justify-center text-xs font-semibold shrink-0",
                 !confirmed && !isSelected && "bg-border text-muted-foreground",
-                (!confirmed && isSelected || showCorrect) && "bg-success text-success-foreground",
+                !confirmed && isSelected && "bg-success text-success-foreground",
+                showCorrect && "bg-green-500 text-white",
                 showWrong && "bg-primary text-primary-foreground"
               )}>
                 {LETTERS[idx] || idx + 1}
               </span>
               <span className="text-[15px]">{ans.answer_text}</span>
-              {showCorrect && <CheckCircle2 className="ml-auto h-5 w-5 text-success shrink-0" />}
+              {showCorrect && <CheckCircle2 className="ml-auto h-5 w-5 text-green-500 shrink-0" />}
               {showWrong && <XCircle className="ml-auto h-5 w-5 text-primary shrink-0" />}
             </button>
           );
