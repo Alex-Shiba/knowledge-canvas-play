@@ -52,16 +52,6 @@ export default function Index() {
 
   return (
     <div className="container py-8 px-4 max-w-2xl">
-      <div className="mb-8 text-center animate-fade-in">
-        <img src="/logo_main.svg" alt="Соловьёв Квиз" className="mx-auto mb-4 h-7 w-auto" />
-        <h1 className="text-4xl font-bold uppercase leading-tight md:text-5xl" style={{ fontFamily: "'Oswald', sans-serif" }}>
-          Соловьёв <span className="text-primary">Квиз</span>
-        </h1>
-        <p className="mt-4 text-muted-foreground italic max-w-md mx-auto">
-          Выберите квиз, ответьте на вопросы и узнайте свой уровень знаний
-        </p>
-      </div>
-
       <div className="mb-6">
         <div className="relative">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
