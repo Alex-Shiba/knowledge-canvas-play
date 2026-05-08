@@ -53,7 +53,7 @@ export default function Index() {
   return (
     <div className="container py-8 px-4 max-w-2xl">
       <div className="mb-8 text-center animate-fade-in">
-        <img src="/logo_main.svg" alt="Соловьёв Квиз" className="mx-auto mb-4 h-14 w-auto" />
+        <img src="/logo_main.svg" alt="Соловьёв Квиз" className="mx-auto mb-4 h-7 w-auto" />
         <h1 className="text-4xl font-bold uppercase leading-tight md:text-5xl" style={{ fontFamily: "'Oswald', sans-serif" }}>
           Соловьёв <span className="text-primary">Квиз</span>
         </h1>
