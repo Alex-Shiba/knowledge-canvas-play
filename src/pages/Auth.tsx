@@ -40,7 +40,7 @@ export default function Auth() {
     <div className="flex min-h-screen items-center justify-center bg-background p-4">
       <div className="w-full max-w-sm animate-fade-in">
         <div className="text-center mb-8">
-          <img src="/logo_main.svg" alt="Соловьёв Квиз" className="mx-auto mb-4 h-20 w-auto" />
+          <img src="/logo_main.svg" alt="Соловьёв Квиз" className="mx-auto mb-4 h-12 w-auto" />
           <h1 className="font-display text-2xl font-bold uppercase tracking-wider">
             Соловьёв<span className="text-primary"> Квиз</span>
           </h1>
