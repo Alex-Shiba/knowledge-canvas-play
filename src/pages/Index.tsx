@@ -53,9 +53,9 @@ export default function Index() {
   return (
     <div className="container py-8 px-4 max-w-2xl">
       <div className="mb-8 text-center animate-fade-in">
-        <p className="text-xs uppercase tracking-[3px] text-primary mb-4">Интерактивные квизы</p>
+        <img src="/logo_main.svg" alt="Соловьёв Квиз" className="mx-auto mb-6 h-24 w-auto" />
         <h1 className="text-4xl font-bold uppercase leading-tight md:text-5xl" style={{ fontFamily: "'Oswald', sans-serif" }}>
-          Проверь свои<br /><span className="text-primary">знания</span>
+          Соловьёв <span className="text-primary">Квиз</span>
         </h1>
         <p className="mt-4 text-muted-foreground italic max-w-md mx-auto">
           Выберите квиз, ответьте на вопросы и узнайте свой уровень знаний
