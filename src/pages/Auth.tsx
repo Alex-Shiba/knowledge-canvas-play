@@ -40,11 +40,9 @@ export default function Auth() {
     <div className="flex min-h-screen items-center justify-center bg-background p-4">
       <div className="w-full max-w-sm animate-fade-in">
         <div className="text-center mb-8">
-          <div className="mx-auto mb-4 w-10 h-10 bg-primary rounded flex items-center justify-center text-sm font-bold text-primary-foreground">
-            QF
-          </div>
+          <img src="/logo_main.svg" alt="Соловьёв Квиз" className="mx-auto mb-4 h-20 w-auto" />
           <h1 className="font-display text-2xl font-bold uppercase tracking-wider">
-            Quiz<span className="text-primary">Flow</span>
+            Соловьёв<span className="text-primary"> Квиз</span>
           </h1>
           <p className="text-muted-foreground text-sm mt-2">Введите номер телефона</p>
         </div>
