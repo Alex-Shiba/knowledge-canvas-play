@@ -26,11 +26,19 @@ Deno.serve(async (req) => {
 
     const fakeEmail = `phone_${phone.replace(/\+/g, "")}@quizflow.local`;
 
-    // Find existing user by phone
-    const { data: existingUsers } = await supabase.auth.admin.listUsers();
-    let user = existingUsers?.users?.find(
-      (u) => u.phone === phone.replace(/^\+/, "") || u.email === fakeEmail
-    );
+    // Find existing user by paginating through all users (listUsers returns 50/page by default)
+    let user: any = null;
+    for (let page = 1; page <= 50 && !user; page++) {
+      const { data: pageData, error: listErr } = await supabase.auth.admin.listUsers({ page, perPage: 1000 });
+      if (listErr) {
+        console.error("List users error:", listErr);
+        break;
+      }
+      user = pageData?.users?.find(
+        (u) => u.email === fakeEmail || u.phone === phone.replace(/^\+/, "")
+      );
+      if (!pageData?.users || pageData.users.length < 1000) break;
+    }
 
     if (!user) {
       const { data: newUser, error: createError } = await supabase.auth.admin.createUser({
